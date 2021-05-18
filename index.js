@@ -9,7 +9,6 @@ const port = process.env.PORT || 5500;
 app.use(bodyParser.json());
 app.use(cors());
 
-// console.log( process.env.DB_USER,process.env.DB_PASS);
 
 const MongoClient = require("mongodb").MongoClient;
 const { ObjectID } = require("mongodb");
@@ -69,15 +68,6 @@ client.connect((err) => {
   });
 
 
-
-  // app.delete("/deleteProduct/:id", (req, res) => {
-  //   const foodId = req.params._id
-  //   UserFoodsOnlineCollection.deleteOne(foodId)
-  //   .then((response) => {
-  //     // console.log(response);
-  //     res.send(response.deletedCount > 0)
-  //   })
-  // });
   console.log("data connected");
 });
 
