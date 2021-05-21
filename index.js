@@ -28,7 +28,8 @@ client.connect((err) => {
 
   app.post("/addProduct", (req, res) => {
     const addProduct = req.body;
-    UserFoodsOnlineCollection.insertOne(addProduct).then((res) => {
+    UserFoodsOnlineCollection.insertOne(addProduct)
+    .then((res) => {
       res.send(res.insertedCount > 0);
       // console.log(res);
     });
@@ -43,8 +44,7 @@ client.connect((err) => {
 
   app.post("/addFoods", (req, res) => {
     const foodsInfo = req.body;
-    const foods = JSON.stringify(foodsInfo);
-    foodsOnlineCollection.insertOne(foods).then((res) => {
+    foodsOnlineCollection.insertOne(foodsInfo).then((res) => {
       // console.log(res);
       res.send(res.insertedCount > 0);
     });
@@ -65,6 +65,7 @@ client.connect((err) => {
       console.log("Deleting Product " + req.params.id);
       res.json(product);
     })
+   
   });
 
 
