@@ -30,8 +30,8 @@ client.connect((err) => {
     const addProduct = req.body;
     UserFoodsOnlineCollection.insertOne(addProduct)
     .then((res) => {
-      res.send(res.insertedCount > 0);
-      // console.log(res);
+      // res.send(res.insertedCount > 0);
+      console.log(res);
     });
   });
 
@@ -61,9 +61,10 @@ client.connect((err) => {
 
 
   app.delete('/deleteProduct/:id', function(req, res) {
-    UserFoodsOnlineCollection.findOneAndDelete({_id: req.params.id},function(err,product) {
+    foodsOnlineCollection.findOneAndDelete({_id: req.params.id},function(err,product) {
       console.log("Deleting Product " + req.params.id);
       res.json(product);
+      
     })
    
   });
