@@ -9,7 +9,6 @@ const port = process.env.PORT || 5500;
 app.use(bodyParser.json());
 app.use(cors());
 
-
 const MongoClient = require("mongodb").MongoClient;
 const { ObjectID } = require("mongodb");
 const id = new ObjectID();
@@ -28,10 +27,17 @@ client.connect((err) => {
 
   app.post("/addProduct", (req, res) => {
     const addProduct = req.body;
-    UserFoodsOnlineCollection.insertOne(addProduct)
-    .then((res) => {
-      // res.send(res.insertedCount > 0);
+    UserFoodsOnlineCollection.insertOne(addProduct).then((res) => {
+      res.send(res.insertedCount > 0);
       console.log(res);
+    });
+  });
+  app.get("/currentUserProduct", (req, res) => {
+    const quireEmail = req.query.email
+    console.log("this is quire",quireEmail);
+  UserFoodsOnlineCollection.find({email: req.query.email}).toArray((err, userItem) => {
+      res.send(userItem);
+      console.log(userItem);
     });
   });
 
@@ -53,22 +59,22 @@ client.connect((err) => {
   });
 
   app.get("/allFoods", (req, res) => {
-    
     foodsOnlineCollection.find().toArray((error, document) => {
       res.send(document);
     });
   });
 
-
-  app.delete('/deleteProduct/:id', function(req, res) {
-    foodsOnlineCollection.findOneAndDelete({_id: req.params.id},function(err,product) {
-      console.log("Deleting Product " + req.params.id);
-      res.json(product);
-      
-    })
-   
+  app.delete("/deleteProduct/:id", function (req, res) {
+    foodsOnlineCollection.findOneAndDelete(
+      { _id: req.params.id },
+      function (err, product) {
+        console.log("Deleting Product " + req.params.id);
+        res.json(product);
+      }
+    );
   });
 
+  //for authorToken........
 
   console.log("data connected");
 });
