@@ -48,6 +48,7 @@ client.connect((err) => {
 
   app.post("/addFoods", (req, res) => {
     const foodsInfo = req.body;
+    console.log(foodsInfo);
     foodsOnlineCollection.insertOne(foodsInfo).then((res) => {
       res.send(res.insertedCount > 0);
     });
@@ -59,13 +60,17 @@ client.connect((err) => {
     });
   });
 
-  app.delete("/deleteProduct/:id", function (req, res) {
-    foodsOnlineCollection.findOneAndDelete(
+  app.delete("/deleteProduct/:id",(req, res) => {
+    console.log(req.params.id);
+    foodsOnlineCollection.deleteOne(
       { _id: req.params.id },
       function (err, product) {
-        res.json(product);
+        res.send(product);
+        console.log(err, product);
       }
     );
+
+   
   });
 
   console.log("data connected");
