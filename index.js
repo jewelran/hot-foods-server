@@ -29,21 +29,19 @@ client.connect((err) => {
     const addProduct = req.body;
     UserFoodsOnlineCollection.insertOne(addProduct).then((res) => {
       res.send(res.insertedCount > 0);
-      console.log(res);
     });
   });
   app.get("/currentUserProduct", (req, res) => {
-    const quireEmail = req.query.email
-    console.log("this is quire",quireEmail);
-  UserFoodsOnlineCollection.find({email: req.query.email}).toArray((err, userItem) => {
-      res.send(userItem);
-      console.log(userItem);
-    });
+    const quireEmail = req.query.email;
+    UserFoodsOnlineCollection.find({ email: req.query.email }).toArray(
+      (err, userItem) => {
+        res.send(userItem);
+      }
+    );
   });
 
   app.get("/food", (req, res) => {
     UserFoodsOnlineCollection.find().toArray((error, food) => {
-      // console.log(food);
       res.send(food);
     });
   });
@@ -51,11 +49,8 @@ client.connect((err) => {
   app.post("/addFoods", (req, res) => {
     const foodsInfo = req.body;
     foodsOnlineCollection.insertOne(foodsInfo).then((res) => {
-      // console.log(res);
       res.send(res.insertedCount > 0);
     });
-
-    console.log(foodsInfo);
   });
 
   app.get("/allFoods", (req, res) => {
@@ -68,13 +63,10 @@ client.connect((err) => {
     foodsOnlineCollection.findOneAndDelete(
       { _id: req.params.id },
       function (err, product) {
-        console.log("Deleting Product " + req.params.id);
         res.json(product);
       }
     );
   });
-
-  //for authorToken........
 
   console.log("data connected");
 });
