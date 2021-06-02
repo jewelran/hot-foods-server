@@ -60,17 +60,14 @@ client.connect((err) => {
     });
   });
 
-  app.delete("/deleteProduct/:id",(req, res) => {
-    console.log(req.params.id);
+  app.delete("/deleteProduct/:id", function (req, res) {
     foodsOnlineCollection.deleteOne(
-      { _id: req.params.id },
+      { _id: ObjectID(req.params.id) },
       function (err, product) {
-        res.send(product);
+        res.json(product);
         console.log(err, product);
       }
     );
-
-   
   });
 
   console.log("data connected");
